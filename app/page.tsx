@@ -20,7 +20,12 @@ export default function QuizBoxes() {
   }
 
   const [boxes, setBoxes] = useState<Box[]>([])
-  const [selectedBox, setSelectedBox] = useState<number | null>(null)
+  const [selectedBox, setSelectedBox] = useState<number | null>(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("selectedBox") || "null")
+    }
+    return null
+  })
   const [answers, setAnswers] = useState<{ [key: string]: string }>(() => {
     if (typeof window !== "undefined") {
       return JSON.parse(localStorage.getItem("answers") || "{}")
@@ -43,6 +48,10 @@ export default function QuizBoxes() {
   useEffect(() => {
     getQuestions().then(data => setBoxes(data))
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem("selectedBox", JSON.stringify(selectedBox))
+  }, [selectedBox])
 
   useEffect(() => {
     localStorage.setItem("answers", JSON.stringify(answers))
