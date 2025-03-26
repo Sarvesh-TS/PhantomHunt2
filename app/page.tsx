@@ -57,7 +57,7 @@ export default function QuizBoxes() {
   }, [unlockedBoxes])
 
   const handleBoxSelect = (boxId: number) => {
-    if (selectedBox === null || isBoxCompleted(selectedBox)) {
+    if (selectedBox === null || isBoxCompleted(selectedBox) || isMCQBox(selectedBox)) {
       setSelectedBox(boxId)
     }
   }
@@ -75,7 +75,7 @@ export default function QuizBoxes() {
     const newFeedback = { ...feedback, [key]: isCorrect }
     setFeedback(newFeedback)
 
-    if (isCorrect) {
+    if (isCorrect || isMCQBox(boxId)) {
       if (!unlockedBoxes.includes(boxId)) {
         setUnlockedBoxes([...unlockedBoxes, boxId])
       }
@@ -84,6 +84,10 @@ export default function QuizBoxes() {
 
   const isBoxCompleted = (boxId: number) => {
     return feedback[`${boxId}-1`] === true
+  }
+
+  const isMCQBox = (boxId: number) => {
+    return boxId >= 6 && boxId <= 10
   }
 
   return (
@@ -120,16 +124,28 @@ export default function QuizBoxes() {
 
                 {isSelected && (
                   <div className="space-y-6">
+                    {box.id === 7 && (
+                      <>
+                        <p className="font-medium text-gray-800">You are investigating a suspicious transaction on a blockchain. The following details are provided:</p>
+                        <Image
+                          src="/images/q7.png"
+                          alt="Suspicious Transaction"
+                          width={600}
+                          height={300}
+                          className="object-contain"
+                        />
+                      </>
+                    )}
                     {box.questions.map((question) => {
                       const answerKey = `${box.id}-${question.id}`
                       return (
                         <div key={question.id} className="space-y-2">
                           <p className="font-medium text-gray-800">{question.question}</p>
-                          {box.id === 5 && (
+                          {box.id === 4 && (
                             <Image
-                              src="/images/karnaugh-map.png"
-                              alt="Karnaugh Map"
-                              width={300}
+                              src="/images/q2_4.png"
+                              alt="Smart Contract"
+                              width={600}
                               height={300}
                               className="object-contain"
                             />
@@ -140,17 +156,19 @@ export default function QuizBoxes() {
                               onChange={(e) => handleAnswerChange(box.id, question.id, e.target.value)}
                               placeholder="Your answer"
                               className="border-gray-300"
+                              disabled={false}
                             />
                             <Button
                               onClick={() => handleSubmit(box.id, question.id)}
                               variant="outline"
                               className="border-black text-black hover:bg-black hover:text-white"
+                              disabled={false}
                             >
                               Submit
                             </Button>
+                            {feedback[answerKey] === false && <p className="text-red-500 text-sm">Wrong answer</p>}
+                            {feedback[answerKey] === true && <p className="text-green-600 text-sm">Correct!</p>}
                           </div>
-                          {feedback[answerKey] === false && <p className="text-red-500 text-sm">Wrong answer</p>}
-                          {feedback[answerKey] === true && <p className="text-green-600 text-sm">Correct!</p>}
                         </div>
                       )
                     })}
