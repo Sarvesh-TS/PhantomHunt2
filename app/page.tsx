@@ -57,7 +57,7 @@ export default function QuizBoxes() {
   }, [unlockedBoxes])
 
   const handleBoxSelect = (boxId: number) => {
-    if (selectedBox === null || isBoxCompleted(selectedBox) || isMCQBox(selectedBox)) {
+    if (selectedBox === null || isBoxCompleted(selectedBox)) {
       setSelectedBox(boxId)
     }
   }
@@ -75,7 +75,7 @@ export default function QuizBoxes() {
     const newFeedback = { ...feedback, [key]: isCorrect }
     setFeedback(newFeedback)
 
-    if (isCorrect || isMCQBox(boxId)) {
+    if (isCorrect) {
       if (!unlockedBoxes.includes(boxId)) {
         setUnlockedBoxes([...unlockedBoxes, boxId])
       }
@@ -84,10 +84,6 @@ export default function QuizBoxes() {
 
   const isBoxCompleted = (boxId: number) => {
     return feedback[`${boxId}-1`] === true
-  }
-
-  const isMCQBox = (boxId: number) => {
-    return boxId >= 6 && boxId <= 10
   }
 
   return (

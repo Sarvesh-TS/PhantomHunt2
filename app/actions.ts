@@ -93,21 +93,15 @@ Password: 1224`,
   {
     id: 8,
     questions: [
-      { id: 1, question: "Scenario: Your company is implementing multi-factor authentication (MFA) to enhance security. One department is resistant, arguing that passwords alone should be sufficient. What is the best way to justify the importance of MFA?\nA. MFA adds an extra layer of security by requiring a second form of authentication, reducing the impact of compromised passwords.\nB. MFA makes logging in faster and more convenient for employees.\nC. MFA completely eliminates the risk of phishing attacks.\nD. MFA is only useful in highly regulated industries, so it may not be necessary for the company.", answer: "A" },
+      { id: 1, question: "https://colab.research.google.com/drive/1Lcd_4F4anoldMcYYYpuZn9Qexbm1IGTM?usp=sharing", answer: "qwerty" },
     ],
   },
   {
     id: 9,
     questions: [
-      { id: 1, question: "You receive an email from your bank, urgently asking you to reset your password due to suspicious activity. The email includes a link that appears legitimate. What is the best way to verify its authenticity?\nA. Click the link and check the website's URL after logging in.\nB. Hover over the link to see the destination URL and compare it with the official website.\nC. Call the number provided in the email to confirm.\nD. Immediately delete the email without checking.", answer: "B" },
+      { id: 1, question: "https://colab.research.google.com/drive/1uR2obPSwNXGAKkmghBz1d_vp31z0RUZC?usp=sharing", answer: "abcde" },
     ],
-  },
-  {
-    id: 10,
-    questions: [
-      { id: 1, question: "A hacker wants to bypass multi-factor authentication (MFA) for an online account. Which method is most likely to succeed?\nA. Brute force attack on the user's password.\nB. SIM swapping to intercept authentication codes.\nC. Social engineering to convince support staff to reset MFA.\nD. Stealing cookies from a user’s session.", answer: "B,C" },
-    ],
-  },
+  }
 ]
 
 // Get questions without answers for client-side rendering
