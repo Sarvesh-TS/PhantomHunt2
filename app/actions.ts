@@ -41,7 +41,7 @@ Password: 1224`,
       { 
         id: 1, 
         question: "You are analyzing a smart contract deployed on the Ethereum blockchain. The contract is designed to manage a decentralized voting system. Below is a snippet of the contract's Solidity code. Identify the vulnerability in the addProposal function.", 
-        answer: "CTF{Name_of_Vulnerability}" 
+        answer: "CTF{typo}" 
       },
     ],
   },
