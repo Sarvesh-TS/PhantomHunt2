@@ -104,90 +104,92 @@ export default function QuizBoxes() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {boxes.map((box) => {
-            const isSelected = selectedBox === box.id
-            const isUnlocked = unlockedBoxes.includes(box.id) || selectedBox === box.id || selectedBox === null
-            const isCompleted = isBoxCompleted(box.id)
+          {boxes
+            .filter((box) => box.id !== 5 && box.id !== 6) // Exclude boxes 5 and 6
+            .map((box) => {
+              const isSelected = selectedBox === box.id
+              const isUnlocked = unlockedBoxes.includes(box.id) || selectedBox === box.id || selectedBox === null
+              const isCompleted = isBoxCompleted(box.id)
 
-            return (
-              <Card
-                key={box.id}
-                className={`relative p-6 border-2 transition-all duration-300 cursor-pointer h-full
-                  ${isSelected ? "border-black shadow-lg col-span-full" : "border-gray-200"}
-                  ${!isUnlocked && !isCompleted && selectedBox !== null ? "opacity-50" : ""}
-                  ${isCompleted ? "bg-gray-50" : "bg-white"}
-                `}
-                onClick={() => handleBoxSelect(box.id)}
-              >
-                {!isUnlocked && !isCompleted && selectedBox !== null && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 backdrop-blur-sm z-10">
-                    <Lock className="w-10 h-10 text-black opacity-70" />
-                  </div>
-                )}
+              return (
+                <Card
+                  key={box.id}
+                  className={`relative p-6 border-2 transition-all duration-300 cursor-pointer h-full
+                    ${isSelected ? "border-black shadow-lg col-span-full" : "border-gray-200"}
+                    ${!isUnlocked && !isCompleted && selectedBox !== null ? "opacity-50" : ""}
+                    ${isCompleted ? "bg-gray-50" : "bg-white"}
+                  `}
+                  onClick={() => handleBoxSelect(box.id)}
+                >
+                  {!isUnlocked && !isCompleted && selectedBox !== null && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 backdrop-blur-sm z-10">
+                      <Lock className="w-10 h-10 text-black opacity-70" />
+                    </div>
+                  )}
 
-                <h2 className="text-xl font-semibold mb-4 text-black">Box {box.id}</h2>
+                  <h2 className="text-xl font-semibold mb-4 text-black">Box {box.id}</h2>
 
-                {isSelected && (
-                  <div className="space-y-6">
-                    {box.id === 7 && (
-                      <>
-                        <p className="font-medium text-gray-800">You are investigating a suspicious transaction on a blockchain. The following details are provided:</p>
-                        <Image
-                          src="/images/q7.png"
-                          alt="Suspicious Transaction"
-                          width={600}
-                          height={300}
-                          className="object-contain"
-                        />
-                      </>
-                    )}
-                    {box.questions.map((question) => {
-                      const answerKey = `${box.id}-${question.id}`
-                      return (
-                        <div key={question.id} className="space-y-2">
-                          <p className="font-medium text-gray-800">{question.question}</p>
-                          {box.id === 4 && (
-                            <Image
-                              src="/images/q2_4.png"
-                              alt="Smart Contract"
-                              width={600}
-                              height={300}
-                              className="object-contain"
-                            />
-                          )}
-                          <div className="flex space-x-2">
-                            <Input
-                              value={answers[answerKey] || ""}
-                              onChange={(e) => handleAnswerChange(box.id, question.id, e.target.value)}
-                              placeholder="Your answer"
-                              className="border-gray-300"
-                              disabled={false}
-                            />
-                            <Button
-                              onClick={() => handleSubmit(box.id, question.id)}
-                              variant="outline"
-                              className="border-black text-black hover:bg-black hover:text-white"
-                              disabled={false}
-                            >
-                              Submit
-                            </Button>
-                            {feedback[answerKey] === false && <p className="text-red-500 text-sm">Wrong answer</p>}
-                            {feedback[answerKey] === true && <p className="text-green-600 text-sm">Correct!</p>}
+                  {isSelected && (
+                    <div className="space-y-6">
+                      {box.id === 7 && (
+                        <>
+                          <p className="font-medium text-gray-800">You are investigating a suspicious transaction on a blockchain. The following details are provided:</p>
+                          <Image
+                            src="/images/q7.png"
+                            alt="Suspicious Transaction"
+                            width={600}
+                            height={300}
+                            className="object-contain"
+                          />
+                        </>
+                      )}
+                      {box.questions.map((question) => {
+                        const answerKey = `${box.id}-${question.id}`
+                        return (
+                          <div key={question.id} className="space-y-2">
+                            <p className="font-medium text-gray-800">{question.question}</p>
+                            {box.id === 4 && (
+                              <Image
+                                src="/images/q2_4.png"
+                                alt="Smart Contract"
+                                width={600}
+                                height={300}
+                                className="object-contain"
+                              />
+                            )}
+                            <div className="flex space-x-2">
+                              <Input
+                                value={answers[answerKey] || ""}
+                                onChange={(e) => handleAnswerChange(box.id, question.id, e.target.value)}
+                                placeholder="CTF{.....}"
+                                className="border-gray-300"
+                                disabled={false}
+                              />
+                              <Button
+                                onClick={() => handleSubmit(box.id, question.id)}
+                                variant="outline"
+                                className="border-black text-black hover:bg-black hover:text-white"
+                                disabled={false}
+                              >
+                                Submit
+                              </Button>
+                              {feedback[answerKey] === false && <p className="text-red-500 text-sm">Wrong answer</p>}
+                              {feedback[answerKey] === true && <p className="text-green-600 text-sm">Correct!</p>}
+                            </div>
                           </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                )}
+                        )
+                      })}
+                    </div>
+                  )}
 
-                {!isSelected && (
-                  <div className="h-32 flex items-center justify-center">
-                    <p className="text-gray-500">{isCompleted ? "Mystery Solved" : "Investigate"}</p>
-                  </div>
-                )}
-              </Card>
-            )
-          })}
+                  {!isSelected && (
+                    <div className="h-32 flex items-center justify-center">
+                      <p className="text-gray-500">{isCompleted ? "Mystery Solved" : "Investigate"}</p>
+                    </div>
+                  )}
+                </Card>
+              )
+            })}
         </div>
       </div>
 

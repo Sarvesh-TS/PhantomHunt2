@@ -8,7 +8,7 @@ const boxesData = [
       { 
         id: 1, 
         question: `You come across a mysterious website that asks for a 6-digit password. Each digit is entered one by one, and the system provides feedback in the form of beep sounds. Analyze the response and find out the flag. [https://tinyurl.com/question-2-1]`, 
-        answer: "ctf{21}" 
+        answer: "CTF{21}" 
       },
     ],
   },
@@ -31,7 +31,7 @@ Password: 1224`,
       { 
         id: 1, 
         question: "You are given a Transaction Hash. Open The Transaction, Analyze, and find out the flag.  0x2aff7f77ec9d5bf378f1fafacfe65b6b01786feb2b854a6a988d1d694a1601d8", 
-        answer: "CTF{0.000062448454110648 ETH}" 
+        answer: "CTF{0.000062448454110648ETH}" 
       },
     ],
   },
